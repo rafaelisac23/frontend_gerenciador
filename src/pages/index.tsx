@@ -1,7 +1,23 @@
-import { useState } from "react";
+import { AuthContext } from "@/contexts/AuthContext";
+import { getApiClient } from "@/services/axios";
+import { FormData } from "@/types/auth";
+import { GetServerSideProps } from "next";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
+import { parseCookies } from "nookies";
 
 const Page = () => {
-  const [email, setEmail] = useState("");
+  const { register, handleSubmit } = useForm<FormData>();
+  const { signUp } = useContext(AuthContext);
+
+  const handleSignUp = async ({ email, password }: FormData) => {
+    try {
+      await signUp({ email, password });
+    } catch (err) {
+      alert("Não autorizado !!!");
+    }
+  };
+
   return (
     <>
       {/*
@@ -20,7 +36,12 @@ const Page = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          <form
+            action="#"
+            method="POST"
+            onSubmit={handleSubmit(handleSignUp)}
+            className="space-y-6"
+          >
             <div>
               <label
                 htmlFor="email"
@@ -30,8 +51,7 @@ const Page = () => {
               </label>
               <div className="mt-2">
                 <input
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  {...register("email")}
                   id="email"
                   name="email"
                   type="email"
@@ -61,6 +81,7 @@ const Page = () => {
               </div>
               <div className="mt-2">
                 <input
+                  {...register("password")}
                   id="password"
                   name="password"
                   type="password"
@@ -94,6 +115,19 @@ const Page = () => {
       </div>
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apiClient = getApiClient(ctx);
+  const { ["nextauth.token"]: token } = parseCookies(ctx);
+
+  if (token) {
+    return {
+      redirect: { destination: "/menu", permanent: false },
+    };
+  }
+
+  return { props: {} };
 };
 
 export default Page;
