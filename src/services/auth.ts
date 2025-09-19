@@ -1,23 +1,15 @@
-import { FetchUser, User } from "@/types/auth";
+import { User } from "@/types/auth";
+import { getApiClient } from "./axios";
 
-export const getUserSignUp = async (
-  email: string,
-  password: string
-): Promise<FetchUser> => {
-  const response = await fetch("http://localhost:3000/api/auth/signup", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email,
-      password,
-    }),
+const api = getApiClient();
+
+export const getUserSignUp = async (email: string, password: string) => {
+  const response = await api.post("/auth/signup", {
+    email,
+    password,
   });
 
-  const data = await response.json();
-
-  return data;
+  return response.data;
 };
 
 export const recoverUserInformation = async (token: string): Promise<User> => {

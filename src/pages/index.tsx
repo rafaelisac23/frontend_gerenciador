@@ -1,10 +1,12 @@
+"use client";
 import { AuthContext } from "@/contexts/AuthContext";
 import { getApiClient } from "@/services/axios";
 import { FormData } from "@/types/auth";
+import axios from "axios";
 import { GetServerSideProps } from "next";
-import { useContext } from "react";
-import { useForm } from "react-hook-form";
 import { parseCookies } from "nookies";
+import { useContext, useState } from "react";
+import { useForm } from "react-hook-form";
 
 const Page = () => {
   const { register, handleSubmit } = useForm<FormData>();
@@ -13,22 +15,13 @@ const Page = () => {
   const handleSignUp = async ({ email, password }: FormData) => {
     try {
       await signUp({ email, password });
-    } catch (err) {
-      alert("Não autorizado !!!");
-    }
+    } catch (err) {}
   };
 
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-gray-900">
-        <body class="h-full">
-        ```
-      */}
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+        {/* <img src="" alt="" /> */}
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">
             Sign in to your account
@@ -103,7 +96,7 @@ const Page = () => {
           </form>
 
           <p className="mt-10 text-center text-sm/6 text-gray-400">
-            Not a member?{" "}
+            Not a member?
             <a
               href="#"
               className="font-semibold text-indigo-400 hover:text-indigo-300"
