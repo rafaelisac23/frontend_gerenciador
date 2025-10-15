@@ -5,17 +5,32 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 
-const toasterStyle = { background: "red", color: "white" };
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "600", "700"], // Escolha os pesos que você precisa
+});
+
+const toasterStyleError = { background: "red", color: "white" };
+const toasterStyleSucess = { background: "green", color: "white" };
+
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <AuthProvider>
       <LoadingScreen />
-      <Component {...pageProps} />
+      <main className={`${poppins.className}`}>
+        <Component {...pageProps} />
+      </main>
       <Toaster
         position="bottom-right"
         reverseOrder={false}
         toastOptions={{
-          style: toasterStyle,
+          style: toasterStyleError,
+
+          success: {
+            style: toasterStyleSucess,
+          },
         }}
       />
     </AuthProvider>

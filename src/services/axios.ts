@@ -32,6 +32,10 @@ export const getApiClient = (ctx?: any) => {
           Toastmessage = data.message;
         }
 
+        if ("message" in data && error.response.status === 409) {
+          Toastmessage = data.message;
+        }
+
         if (error.response.status === 404) {
           Toastmessage = "Not Found Data";
         }
@@ -45,7 +49,6 @@ export const getApiClient = (ctx?: any) => {
       if (error.message === "Network Error" && !error.response) {
         Toastmessage = "Not connected";
       }
-      console.log("Erro para analisar aqui: ", error);
 
       toast.error(Toastmessage);
 

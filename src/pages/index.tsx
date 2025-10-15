@@ -1,11 +1,13 @@
 "use client";
+
 import { AuthContext } from "@/contexts/AuthContext";
 import { getApiClient } from "@/services/axios";
 import { FormData } from "@/types/auth";
-import axios from "axios";
+
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 import { parseCookies } from "nookies";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 
 const Page = () => {
@@ -13,22 +15,25 @@ const Page = () => {
   const { signUp } = useContext(AuthContext);
 
   const handleSignUp = async ({ email, password }: FormData) => {
-    try {
-      await signUp({ email, password });
-    } catch (err) {}
+    await signUp({ email, password });
   };
 
   return (
     <>
-      <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-        {/* <img src="" alt="" /> */}
+      <Head>
+        <title>Login</title>
+      </Head>
+      <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 text-foreground">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">
+          <div className="w-full  flex items-center justify-center">
+            <img src="./images/logo.png" alt="" className="w-20 h-20" />
+          </div>
+          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-foreground">
             Sign in to your account
           </h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
           <form
             action="#"
             method="POST"
@@ -36,10 +41,7 @@ const Page = () => {
             className="space-y-6"
           >
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm/6 font-medium text-gray-100"
-              >
+              <label htmlFor="email" className="block text-sm/6 font-medium ">
                 Email address
               </label>
               <div className="mt-2">
@@ -50,7 +52,7 @@ const Page = () => {
                   type="email"
                   required
                   autoComplete="email"
-                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base  outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                 />
               </div>
             </div>
@@ -59,18 +61,10 @@ const Page = () => {
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="password"
-                  className="block text-sm/6 font-medium text-gray-100"
+                  className="block text-sm/6 font-medium "
                 >
                   Password
                 </label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-400 hover:text-indigo-300"
-                  >
-                    Forgot password?
-                  </a>
-                </div>
               </div>
               <div className="mt-2">
                 <input
@@ -80,7 +74,7 @@ const Page = () => {
                   type="password"
                   required
                   autoComplete="current-password"
-                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base  outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                 />
               </div>
             </div>
@@ -95,13 +89,13 @@ const Page = () => {
             </div>
           </form>
 
-          <p className="mt-10 text-center text-sm/6 text-gray-400">
+          <p className="mt-10 text-center text-sm/6 ">
             Not a member?
             <a
-              href="#"
+              href="/register"
               className="font-semibold text-indigo-400 hover:text-indigo-300"
             >
-              Start a 14 day free trial
+              Start Now
             </a>
           </p>
         </div>
