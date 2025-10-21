@@ -22,3 +22,26 @@ export type TaskType = {
     userId: number;
   }[];
 };
+
+export type Task = {
+  id: number;
+  title: string;
+  content: string;
+  completed: boolean;
+  createdAt: string;
+  updatedAt: string;
+  userId: number;
+};
+
+export const FormSchema = z.object({
+  title: z
+    .string()
+    .transform((val) => (val === "" ? undefined : val))
+    .optional(),
+  content: z
+    .string()
+    .transform((val) => (val === "" ? undefined : val))
+    .optional(),
+});
+
+export type FormType = z.infer<typeof FormSchema>;
