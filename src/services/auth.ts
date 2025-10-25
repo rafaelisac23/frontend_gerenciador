@@ -13,13 +13,16 @@ export const getUserSignUp = async (email: string, password: string) => {
 };
 
 export const recoverUserInformation = async (token: string): Promise<User> => {
-  const response = await fetch("http://localhost:3000/api/auth/validate", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/validate`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   if (!response.ok) {
     throw new Error("Não foi possível recuperar informações do usuário");

@@ -1,7 +1,7 @@
 "use client ";
 
 import { AuthContext } from "@/contexts/AuthContext";
-import { ReactNode, useContext, useEffect, useState } from "react";
+import { ReactNode, use, useContext, useEffect, useState } from "react";
 import { LayoutItem } from "./LayoutItem";
 
 type layoutProps = {
@@ -19,6 +19,8 @@ const Layout = ({ children }: layoutProps) => {
       const now = new Date();
       setTime(now);
       setDate(now.toLocaleDateString("pt-BR"));
+
+      console.log(user?.name);
     };
 
     updateTime();
@@ -33,7 +35,8 @@ const Layout = ({ children }: layoutProps) => {
         {/*Head Nav */}
         <section className="border-b border-white/70 p-2 flex flex-col  gap-3">
           <h1>
-            Olá, <span className="text-lg">{user?.name.toUpperCase()}</span>{" "}
+            Olá,{" "}
+            <span className="text-lg">{user && user.name.toUpperCase()}</span>
           </h1>
           <h2 className="text-xs">
             Bem Vindo ao seu{" "}
